@@ -1,0 +1,26 @@
+Section1 - Introduction
+~~~~~~~~~~~~~~~~~~~~~~~
+
+## Project Dependencies
+-----------------------
+To follow along with the project, you will need some third-party software to build & run the project. Here is a list of the required tools with a link to installation instructions:
+Development
+-----------
+- pnpm: https://pnpm.io/installation
+- Nest CLI: https://docs.nestjs.com/cli/overview
+Build & Deploy
+--------------
+- Docker Desktop: https://www.docker.com/products/docker-desktop/
+- kubectl: https://kubernetes.io/docs/tasks/tools/#kubectl
+- gcloud CLI: https://cloud.google.com/sdk/docs/install
+
+
+## Project Setup
+-----------------
+- install pnpm via https://pnpm.io/installation
+- install nestjs cli https://docs.nestjs.com/cli/overview
+- [repo-project] create the sleepr project: nest new sleepr
+- [repo-project] which package manager would you love to use? ==> pnpm
+- [sleepr] - pnpm run start
+- [postman] - GET http://localhost:3000
+- [sleepr] - create nest common library: nest generate library common
