@@ -1,0 +1,11 @@
+Section02: Common Library
+~~~~~~~~~~~~~~~~~~~~~~~~~
+- Database & Config Module
+    - [sleepr] pnpm i @nestjs/mongoose mongoose
+    - [sleepr] pnpm i @nestjs/config
+    - [sleepr] pnpm i joi
+    - [sleepr] nest generate module -p common
+    - [sleepr] nest generate module database -p common
+    - [sleepr] nest generate module config -p common
+    - [libs/common/src] remove common.module.ts & common.service.*.ts
+    - pnpm start:dev
