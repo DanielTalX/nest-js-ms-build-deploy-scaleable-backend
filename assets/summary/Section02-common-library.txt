@@ -1,6 +1,8 @@
 Section02: Common Library
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-- Database & Config Module
+ Database & Config Module
+--------------------------
+- actions:
     - [sleepr] pnpm i @nestjs/mongoose mongoose
     - [sleepr] pnpm i @nestjs/config
     - [sleepr] pnpm i joi
@@ -9,18 +11,122 @@ Section02: Common Library
     - [sleepr] nest generate module config -p common
     - [libs/common/src] remove common.module.ts & common.service.*.ts
     - pnpm start:dev
-- Abstract Repository
-    - Summary:
+
+Abstract Repository
+-------------------
+- Summary:
     The text outlines the creation of an abstract schema and repository for a microservice architecture using NestJS and MongoDB.
     The abstract schema, defined in “abstract.schema.ts,” serves as a foundational structure for other schemas, including a common property “_id” characteristic of MongoDB documents.
     It is decorated with NestJS Mongoose’s schema decorator and exports an abstract document class with the “_id” specified as a Mongoose Object ID.
     The repository, detailed in “abstract.repository.ts,” provides CRUD functionalities through an abstract class, AbstractRepository, which utilizes a TypeScript generic for document types. Key methods include creating documents while auto-generating “_id,” finding single or multiple documents, updating existing entities, and deleting specific documents.
     Additionally, a static method for initializing the database module with specified models is introduced, abstracting the schema setup process.
     This structure promotes code reuse and avoids duplication across microservices.
-    - Key Insights:
-    The abstract schema establishes a consistent foundation for database documents within a microservice architecture.
-    The use of Mongoose’s Object ID for “_id” aligns with MongoDB’s standard practices, ensuring compatibility.
-    AbstractRepository centralizes CRUD operations, streamlining the creation and management of document interactions.
-    The implementation of detailed logging within CRUD methods enhances tracking and error management.
-    By employing TypeScript generics, the repository can be tailored to various document types, increasing flexibility and type safety.
-    The static method for feature initialization enhances modularity and simplifies schema management.
+- Key Insights:
+    - The abstract schema establishes a consistent foundation for database documents within a microservice architecture.
+    - The use of Mongoose’s Object ID for “_id” aligns with MongoDB’s standard practices, ensuring compatibility.
+    - AbstractRepository centralizes CRUD operations, streamlining the creation and management of document interactions.
+    - The implementation of detailed logging within CRUD methods enhances tracking and error management.
+    - By employing TypeScript generics, the repository can be tailored to various document types, increasing flexibility and type safety.
+    - The static method for feature initialization enhances modularity and simplifies schema management.
+
+- Reservations CRUD
+-------------------
+- actions:
+    - create reservations ms
+        - [sleepr] nest g app reservations 
+            ==> creates an app folder that contains reservations & sleepr 
+            ==> modifying [sleepr/nest-cli.json]: modifying sourceRoot, tsConfigPath, monorepo, root parameters. add reservations & sleepr sections.
+        - [sleepr/nest-cli.json] - manual modifying
+        - [sleepr] validate by: pnpm start:dev
+- Summary:
+    The text outlines the process of creating a microservice for managing reservations within a mono repository using the NestJS framework.
+    The author details the steps to generate a new application called “reservations” through the Nest CLI.
+    This includes creating a new directory structure that houses the source files and configurations necessary for the microservice.
+    The author also describes modifying the Nest CLI configuration to reflect the new application, changing the routing from the default “sleepr” directory to the “reservations” directory, and cleaning up by removing unnecessary files.
+    Finally, they confirm that the application starts successfully using the NPM command.
+- Key Insights:
+    - The process involves utilizing the Nest CLI to generate a new microservice within a mono repo.
+    - The newly created microservice is specifically designed for handling reservations.
+    - The directory structure is organized to separate the microservice’s source files and configurations.
+    - Modifications to the Nest CLI configuration are necessary to set the default project and routing.
+    - Successful application startup is confirmed through terminal commands, indicating proper setup.
+- Frequently Asked Questions
+    - What is a mono repository?
+    A mono repository (mono repo) is a version control strategy where multiple projects are stored within a single repository, allowing for easier management of shared code and dependencies.
+    - How do I create a microservice using NestJS?
+    You can create a microservice in NestJS by utilizing the Nest CLI command nest g app <appName> to generate a new application within your project structure.
+    - What is the purpose of the configuration files in NestJS?
+    Configuration files in NestJS define settings and parameters necessary for the application to run correctly, such as TypeScript paths and application routes.
+    - How can I verify if my NestJS application is running correctly?
+    You can verify your NestJS application is running correctly by using the command npm start dev, which starts the application and checks for any startup errors in the terminal.
+
+- actions:
+    - [sleepr] nest g resource reservations
+        ==> select default REST API
+        ==> select YES for CRUD entry points
+- Summary:
+    To add default CRUD functionality to our reservations service, we use Nest CLI to generate a resource called reservation in the reservations project.
+    The tool prompts us to choose a transport layer; we select a default REST API. When asked if we want to generate CRUD entry points, we choose yes.
+    This process creates boilerplate code, saving us time. 
+    After completing the command, we see new files created in the reservations directory, which support CRUD operations.
+    The reservations controller is set up with a reservations prefix and includes a reservation service that implements CRUD functions: creating, finding all, finding one, updating, and removing reservations.
+    Using NestJS decorators, routes are mapped to GET, PATCH, DELETE, and POST requests.
+    The Create Reservation request has an automatic Data Transfer Object (DTO) defined, and similar structures are in place for finding, updating, and deleting reservations. 
+    The reservation service also contains stub methods.
+    Next, we'll move all files from the reservations directory [sleepr/apps/reservations/reservations] to the source directory [sleepr/apps/reservations], replacing any existing files.
+    After this, we will fill out the reservation service to interact directly with a database.
+- Key Insights:
+    - The use of NestJS simplifies the creation of boilerplate code for CRUD operations.
+    - A reservations controller is created to manage reservation-related functionalities.
+    - Automatic generation of Data Transfer Objects (DTOs) facilitates request handling.
+    - The integration of various transport layers is a feature of the course, starting with REST API.
+    - The process includes moving generated files to a source directory to enable database interactions.
+- Frequently Asked Questions:
+    - What is NestJS?
+    NestJS is a progressive Node.js framework that enables the development of efficient, reliable, and scalable server-side applications using TypeScript.
+    - How does the CRUD functionality work in this context?
+    CRUD functionality allows users to create, read, update, and delete reservations through defined routes in the reservations controller.
+    - What are Data Transfer Objects (DTOs) in NestJS?
+    DTOs are objects that define the structure of data sent over the network, ensuring type safety and validation for incoming requests.
+    - Why is boilerplate code important in application development?
+    Boilerplate code saves time and effort by providing a foundational structure that developers can build upon, allowing them to focus on implementing business logic rather than repetitive setup tasks.
+
+- Title: Implementation of Reservations Module Using NestJS 
+- Introduction:
+This content outlines the steps to set up a reservations module in a NestJS application, including repository creation, schema definition, and CRUD functionality for managing reservations.
+It also discusses necessary adjustments to ensure proper imports and schema registration in the application. 
+- Key Points:
+1. Opening the Reservations Module  - The reservations module is accessed, requiring updates to the import array, specifically for the database module. 
+2. Creating Reservations Repository  - A new file, `reservations. repository. ts`, is created. This injectable class extends an abstract repository, allowing data handling through the Reservation service. 
+3. Exporting Abstract Repository  - Check and modify the `index. ts` and `databaseIndex. ts` files to ensure that the abstract repository is properly exported. 
+4. Defining the Reservation Schema  - The `entities` folder is renamed to `models`. The `reservation. entity` file is updated to `reservation. schema`, along with defining a schema using decorators from NestJS Mongoose. 
+5. Adding Properties to Reservation Document  - The reservation document will initially include properties like timestamp, start date, end date, user ID, place ID, and invoice ID with appropriate types defined. 
+6. Updating the Reservations Repository  - Add necessary imports and define a logger for logging purposes. Set up a constructor to inject the Mongoose model. 
+7. Configuring Mongoose  - To register the model with Mongoose, a static method called `forFeature` is added in the database module. This method initializes the schemas for use in the application. 
+8. CRUD Operations Implementation  - Construct the Reservations service to implement create, find all, find one, update, and delete methods using the repository methods effectively. 
+9. Testing the API  - Using Postman, tests are conducted for various CRUD operations. Each request is validated to ensure the expected responses, including creating, retrieving, updating, and deleting reservations. 
+10. Adding Validation  - Currently, there’s no validation for incoming data for creating reservations. A need arises to implement proper validation to restrict invalid data submissions in future lectures. 
+- Conclusion: The content successfully illustrates the setup and operational details of a reservations module with full CRUD capabilities in a NestJS application. However, it highlights a critical next step: integrating data validation to ensure that invalid data cannot be processed when creating reservations.
+- Summary:
+    The content discusses the implementation of a reservations module using NestJS and Mongoose.
+    It outlines the steps to create a reservations repository and schema, ensuring that necessary imports and dependencies are correctly established.
+    The reservation schema includes properties like timestamps, start/end dates, user IDs, place IDs, and invoice IDs.
+    The text also describes how to set up a CRUD (Create, Read, Update, Delete) functionality within the reservations service, including the creation of DTOs (Data Transfer Objects) for data validation.
+    Finally, it emphasizes the need for validation to prevent erroneous data submissions when creating reservations.
+- Key Insights:
+    - The reservations module employs NestJS and Mongoose to manage reservation data effectively.
+    - A structured approach is taken to define the reservation schema, incorporating essential fields such as timestamps and user associations.
+    - The CRUD methods are implemented to handle reservation data operations within the application.
+    - The use of DTOs is crucial for type safety and data validation when creating and manipulating reservation documents.
+    - The implementation highlights the importance of validation to ensure data integrity and prevent erroneous submissions.
+- Frequently Asked Questions:
+    - What is the purpose of the reservations repository in the application?
+    The reservations repository acts as an interface for interacting with the reservation data in the database, facilitating CRUD operations.
+    - How are schemas defined in NestJS with Mongoose?
+    Schemas are defined using decorators like @Schema() from NestJS Mongoose, which allows developers to specify the structure and properties of the documents.
+    - Why is validation important when creating reservations?
+    Validation ensures that only correctly formatted and required data is submitted to the server, preventing potential errors and data corruption.
+    - How can I implement custom validation for the reservation data?
+    Custom validation can be implemented by using class-validator decorators on the DTO properties, ensuring that incoming data meets specific criteria before processing.
+
+
