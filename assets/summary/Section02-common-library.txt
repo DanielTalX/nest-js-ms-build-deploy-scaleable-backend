@@ -186,3 +186,70 @@ It also discusses necessary adjustments to ensure proper imports and schema regi
     - How can the logging format be improved in a NestJS application?
     By using the pino-pretty package, the log output can be formatted to be more readable, making it easier to interpret the logged data.
 
+
+13 - Dockerize
+------------
+- actions:
+    # docker build ../../ -f Dockerfile -t sleepr-reservations
+    # docker run sleepr-reservations
+    # docker-compose down
+    # docker-compose up
+- Title: Dockerizing Reservations Application and Setting Up MongoDB 
+- Introduction: 
+    The process of creating a microservice for authentication begins with Dockerizing the existing reservations application.
+    This approach will facilitate running multiple applications simultaneously using Docker Compose. 
+- Key Points: 
+    1. Preparation: 
+    • Ensure Docker is installed on your machine. 
+    • A separate video will cover how to install Docker if needed. 
+    2. Creating Dockerfile: 
+    • Navigate to the reservations folder and create a `Dockerfile`. 
+    • The `Dockerfile` serves as a template that outlines how to build the application. 
+    3. Setting Up the Dockerfile: 
+    • Extend from the Node Alpine image for the base. 
+    • Set the working directory to `/usr/src/app`. 
+    • Copy `package. json` and `npm-lock. yaml` into the container. 
+    • Install dependencies using NPM, including `pmpm` globally. 
+    • Copy the entire app and run `npm run build` to compile the application. 
+    4. Defining the Production Stage: 
+    • Create a production image also based on Node Alpine. 
+    • Set an environment variable `NODE_ENV` to production. 
+    • Copy `package. json` and install only production dependencies with `npm install --prod`, making the image lighter. 
+    • Copy the built files from the development stage. 
+    5. Running the Docker Container: 
+    • Execute the command to build the Docker image. 
+    • After building, run the container. An issue arises with MongoDB URI due to an unspecified environment variable. 
+    6. Using Docker Compose: 
+    • Create a `docker-compose. yaml` to manage running containers more effectively and include environment variable configurations. 
+    • Define services, starting with the reservations container and specify the build context and Dockerfile path. 
+    • Use the target to run from the development stage ensuring hot-reloading is activated during development. 
+    7. Adding a MongoDB Service: 
+    • Introduce a MongoDB service in the `docker-compose. yaml`, using the official MongoDB image from Docker Hub. 
+    • Adjust the application’s database URI to connect to the Mongo service using the service name rather than localhost. 
+    8. Testing and Finalization: 
+    • Bring up the containers using Docker Compose, verify logs from both reservations and MongoDB, ensuring that they start without issues and the application is running smoothly. 
+- Conclusion: 
+    The reservations application is now fully dockerized and operational alongside a MongoDB container.
+    This sets a solid foundation for creating additional microservices in the future.
+- Summary:
+    The text provides a detailed guide on Dockerizing an existing reservations application and setting up a microservice architecture.
+    It begins by explaining the need for Docker to run multiple applications simultaneously using Docker Compose.
+    The process includes creating a Dockerfile to define how the application should be built, using a multi-stage approach for both development and production environments.
+    Key steps involve setting up the working directory, copying necessary files, installing dependencies, and building the application.
+    The guide also covers how to set up Docker Compose for managing environment variables and running services, including the integration of a MongoDB service.
+    The text concludes with successful startup confirmation of both the reservations application and the MongoDB container, enabling the creation of additional microservices.
+- Key Insights:
+    - Dockerizing the reservations application facilitates the management of multiple services concurrently.
+    - A multi-stage Dockerfile optimizes the application for both development and production environments.
+    - Docker Compose simplifies the process of managing environment variables and service dependencies.
+    - Networking within Docker allows containers to communicate using service names instead of IP addresses.
+    - Proper configuration of the Docker ignore file is crucial to prevent unnecessary files from being included in the Docker image.
+- Frequently Asked Questions:
+    -What is the purpose of a Dockerfile?
+    A Dockerfile contains instructions to build a Docker image, specifying how to set up the application environment, dependencies, and commands to run the application.
+    - How does Docker Compose help in managing multiple services?
+    Docker Compose allows users to define and run multi-container Docker applications using a simple YAML configuration, making it easy to manage dependencies and environment variables.
+    - Why is it important to have separate stages in a Dockerfile?
+    Separate stages in a Dockerfile enable optimization for different environments, ensuring that only necessary dependencies are included in the production build, which results in a lighter image.
+    - How can containers communicate with each other in Docker?
+    Containers can communicate using the service name defined in the Docker Compose file, effectively allowing them to resolve each other’s addresses in the internal Docker network.
