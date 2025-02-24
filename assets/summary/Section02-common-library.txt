@@ -129,4 +129,60 @@ It also discusses necessary adjustments to ensure proper imports and schema regi
     - How can I implement custom validation for the reservation data?
     Custom validation can be implemented by using class-validator decorators on the DTO properties, ensuring that incoming data meets specific criteria before processing.
 
+11 - Validation & Logging 
+---------------------------
+- actions:
+    - [sleepr] pnpm i class-validator class-transformer
+    - [sleepr] pnpm i nestjs-pino pino-http pino-pretty
+    - [sleepr] nest g module logger 
+        => select common project
+- Introduction:
+    This content outlines steps for adding user input validation and enhancing logging in a controller within a software project. 
+- Key Points:
+    1. Adding Validation: 
+    • Install necessary packages: `class validator` and `class transformer` for validating user input. 
+    • Use the `useGlobalPipes` function in the application to implement the validation pipe. 
+    • Import `ValidationPipe` from `Nestjs Common` for validating and transforming request data. 
+    2. Enhancing Logging: 
+    • Use `Nestjs Piano`, a logging repository that automatically binds request data to logs. 
+    • Install `Nestjs Piano` and `Piano HTTP`. 
+    • Import the logger in the application and set it up to improve log readability. 
+    • Install `Pino Pretty` to format logs more clearly. 
+    3. Implementing Logger: 
+    • On successful requests, system logs provide useful information, including request ID and response details. 
+    • Log statements will include IDs for correlation across requests. 
+    • Handle errors effectively, providing clear error messages with relevant request IDs. 
+    4. Creating a Logger Module: 
+    • To avoid repeating logging setup in multiple microservices, create a new logger module in a common library. 
+    • Abstract the logging functionality and export it for reuse in different projects. 
+    5. Setting Up Validation Rules: 
+    • Use class validator decorators on the Create Reservation DTO to ensure input properties are valid. 
+    • Implement a whitelist feature to exclude unexpected properties from being processed. 
+    6. Testing with Postman: 
+    • Issue requests to the API and observe responses; validate that only correct and expected data is processed. 
+    • Test response handling for incorrect data formats to ensure proper errors are generated. 
+- Conclusion 
+    Validation and logging have been successfully structured in the application. The next steps involve adding authentication features to the backend in future sessions.
+- Summary:
+    The text discusses the implementation of validation and logging in a NestJS application.
+    It introduces the installation of class-validator and class-transformer to validate user input, emphasizing best practices.
+    The author also integrates nestjs-pino for enhanced logging, which automatically binds request data to logs, facilitating easier tracking of requests and responses.
+    The implementation involves setting up a global validation pipe, configuring the logger, and ensuring that only valid properties are accepted in the request.
+    The process is demonstrated with examples, showing how validation prevents invalid data submissions and how logging provides detailed insights into each request’s lifecycle.
+    Finally, there is a hint toward upcoming authentication features to be added in the application.
+- Key Insights:
+    - Implementing validation enhances application security and data integrity by ensuring user input meets specified criteria.
+    - The nestjs-pino logger improves logging functionality, enabling automatic data binding for better log correlation.
+    - Using global pipes for validation simplifies the process of checking request data against defined rules.
+    - The introduction of whitelisting in the validation process prevents the acceptance of unexpected properties, reinforcing data model consistency.
+    - The logging system provides useful error messages that aid in debugging and understanding system behavior during failures.
+- Frequently Asked Questions:
+    - What is the purpose of using class-validator and class-transformer in NestJS?
+    They are used to validate incoming data and transform it into the desired format, ensuring that requests conform to expected structures and types.
+    - How does the nestjs-pino logger enhance logging in a NestJS application?
+    It automatically binds request data to logs, providing context for each request and response, which allows for easier debugging and monitoring.
+    - What does setting the whitelist option to true in the validation pipe do?
+    It ensures that only properties defined with decorators in the Data Transfer Object (DTO) are accepted, stripping away any additional unexpected properties.
+    - How can the logging format be improved in a NestJS application?
+    By using the pino-pretty package, the log output can be formatted to be more readable, making it easier to interpret the logged data.
 
