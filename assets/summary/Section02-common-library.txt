@@ -9,3 +9,18 @@ Section02: Common Library
     - [sleepr] nest generate module config -p common
     - [libs/common/src] remove common.module.ts & common.service.*.ts
     - pnpm start:dev
+- Abstract Repository
+    - Summary:
+    The text outlines the creation of an abstract schema and repository for a microservice architecture using NestJS and MongoDB.
+    The abstract schema, defined in “abstract.schema.ts,” serves as a foundational structure for other schemas, including a common property “_id” characteristic of MongoDB documents.
+    It is decorated with NestJS Mongoose’s schema decorator and exports an abstract document class with the “_id” specified as a Mongoose Object ID.
+    The repository, detailed in “abstract.repository.ts,” provides CRUD functionalities through an abstract class, AbstractRepository, which utilizes a TypeScript generic for document types. Key methods include creating documents while auto-generating “_id,” finding single or multiple documents, updating existing entities, and deleting specific documents.
+    Additionally, a static method for initializing the database module with specified models is introduced, abstracting the schema setup process.
+    This structure promotes code reuse and avoids duplication across microservices.
+    - Key Insights:
+    The abstract schema establishes a consistent foundation for database documents within a microservice architecture.
+    The use of Mongoose’s Object ID for “_id” aligns with MongoDB’s standard practices, ensuring compatibility.
+    AbstractRepository centralizes CRUD operations, streamlining the creation and management of document interactions.
+    The implementation of detailed logging within CRUD methods enhances tracking and error management.
+    By employing TypeScript generics, the repository can be tailored to various document types, increasing flexibility and type safety.
+    The static method for feature initialization enhances modularity and simplifies schema management.
